@@ -1,0 +1,25 @@
+{
+  "name": "@whiterook6/terminal-engine",
+  "version": "0.0.6",
+  "description": "A simple engine to run typescript terminal animations and games",
+  "author": "Tim Graboski <whiterook6@gmail.com>",
+  "main": "src/index.ts",
+  "scripts":{
+    "check": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/ansi": "^0.3.1",
+    "@types/heap": "^0.2.34",
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "tsc": "^2.0.4"
+  },
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "heap": "^0.2.7",
+    "winston": "^3.13.0"
+  }
+}

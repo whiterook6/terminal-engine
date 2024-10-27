@@ -5,13 +5,13 @@ import { RGB } from "./types";
 export type TOKEN = [
   /** The text to write */
   string,
-  
+
   /** The text color red */
   number,
-  
+
   /** The text color green */
   number,
-  
+
   /** The text color blue */
   number,
 
@@ -22,7 +22,7 @@ export type TOKEN = [
   number,
 
   /** The background color blue */
-  number
+  number,
 ];
 
 export class Framebuffer {
@@ -36,13 +36,13 @@ export class Framebuffer {
   private emptyBGRow: RGB[];
 
   constructor(width: number, height: number) {
-    if (width < 1 || height < 1){
+    if (width < 1 || height < 1) {
       throw new Error("Framebuffer must have a width and height of at least 1");
     }
 
     this.width = width;
     this.height = height;
-    
+
     this.emptyRow = " ".repeat(this.width);
     this.emptyFGRow = Array(this.width).fill([255, 255, 255]);
     this.emptyBGRow = Array(this.width).fill([0, 0, 0]);
@@ -56,8 +56,8 @@ export class Framebuffer {
     this.buffer.fill(this.emptyRow);
     this.fgBuffer.fill(this.emptyFGRow);
     this.bgBuffer.fill(this.emptyBGRow);
-  }
-  
+  };
+
   public render = (cursor: ansi.Cursor) => {
     cursor.buffer();
     cursor.goto(1, 1);
@@ -74,7 +74,7 @@ export class Framebuffer {
           previousFG = this.fgBuffer[j][i];
         }
         if (this.bgBuffer[j][i] !== previousBG) {
-          cursor.bg.rgb(...this.bgBuffer[j][i] as RGB);
+          cursor.bg.rgb(...(this.bgBuffer[j][i] as RGB));
           previousBG = this.bgBuffer[j][i];
         }
         cursor.write(this.buffer[j][i]);
@@ -120,15 +120,27 @@ export class Framebuffer {
       return Array(text.length).fill([fgRed, fgGreen, fgBlue]);
     });
     const bgRow: RGB[] = tokens.flatMap((token) => {
-      const [text, fgRed, fgGreen, fgBlue, bgRed, bgGreen, bgBlue] = token;
+      const [text, , , , bgRed, bgGreen, bgBlue] = token;
       return Array(text.length).fill([bgRed, bgGreen, bgBlue]);
     });
 
-    this.buffer[flootViewY] = overwriteString(this.buffer[flootViewY], row, floorViewX);
-    this.fgBuffer[flootViewY] = overwriteArray<RGB>(this.fgBuffer[flootViewY], fgRow, floorViewX);
-    this.bgBuffer[flootViewY] = overwriteArray<RGB>(this.bgBuffer[flootViewY], bgRow, floorViewX);
+    this.buffer[flootViewY] = overwriteString(
+      this.buffer[flootViewY],
+      row,
+      floorViewX,
+    );
+    this.fgBuffer[flootViewY] = overwriteArray<RGB>(
+      this.fgBuffer[flootViewY],
+      fgRow,
+      floorViewX,
+    );
+    this.bgBuffer[flootViewY] = overwriteArray<RGB>(
+      this.bgBuffer[flootViewY],
+      bgRow,
+      floorViewX,
+    );
   };
 
   public getWidth = () => this.width;
   public getHeight = () => this.height;
-};
+}

@@ -14,12 +14,15 @@ export class Engine {
   private cursor: ansi.Cursor;
   private framebuffer: Framebuffer;
 
-  constructor(){
+  constructor() {
     this.cursor = ansi(process.stdout);
     this.cursor.hide();
-    this.framebuffer = new Framebuffer(process.stdout.columns, process.stdout.rows);
+    this.framebuffer = new Framebuffer(
+      process.stdout.columns,
+      process.stdout.rows,
+    );
 
-    process.on('SIGINT', () => {
+    process.on("SIGINT", () => {
       this.stop();
       this.cursor.goto(0, 0).show().reset().bg.reset().eraseLine();
       process.exit();
@@ -30,54 +33,54 @@ export class Engine {
     this.update = update;
 
     return this;
-  }
+  };
 
   public onRender = (render: RenderCallback): Engine => {
     this.render = render;
 
     return this;
-  }
+  };
 
-  public start = () => {
-    if (this.isPaused || !this.intervalID){
+  public start = (): Engine => {
+    if (this.isPaused || !this.intervalID) {
       this.isPaused = false;
       this.intervalID = setInterval(this.gameLoop, Engine.tickLengthMs);
     }
 
     return this;
-  }
+  };
 
-  public stop = () => {
+  public stop = (): Engine => {
     this.isPaused = true;
-    if (this.intervalID){
+    if (this.intervalID) {
       clearInterval(this.intervalID);
       this.intervalID = undefined;
     }
 
     return this;
-  }
-  
+  };
+
   public togglePause = (): Engine => {
-    if (this.isPaused){
+    if (this.isPaused) {
       this.start();
     } else {
       this.stop();
     }
 
     return this;
-  }
-  
+  };
+
   public gameLoop = (): Engine => {
-    if (!this.isPaused && this.update){
+    if (!this.isPaused && this.update) {
       this.update(Engine.tickLengthMs);
     }
-    
-    if (this.render){
+
+    if (this.render) {
       this.framebuffer.clear();
       this.render(this.framebuffer);
       this.framebuffer.render(this.cursor);
     }
 
     return this;
-  }
+  };
 }

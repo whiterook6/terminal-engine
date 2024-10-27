@@ -1,21 +1,34 @@
 {
   "name": "@whiterook6/terminal-engine",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A simple engine to run typescript terminal animations and games",
   "author": "Tim Graboski <whiterook6@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/whiterook6/terminal-engine.git"
+  },
   "main": "src/index.ts",
-  "scripts":{
-    "check": "tsc --noEmit"
+  "scripts": {
+    "check": "tsc --noEmit",
+    "lint": "eslint --fix",
+    "pretty": "prettier --write ./src"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@eslint/js": "^9.13.0",
     "@types/ansi": "^0.3.1",
+    "@types/eslint__js": "^8.42.3",
     "@types/heap": "^0.2.34",
     "@types/node": "^20.12.7",
-    "typescript": "^5.4.5",
-    "tsc": "^2.0.4"
+    "eslint": "^9.13.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "tsc": "^2.0.4",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.11.0"
   },
   "dependencies": {
     "ansi": "^0.3.1",

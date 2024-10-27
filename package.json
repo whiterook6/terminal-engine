@@ -1,6 +1,6 @@
 {
   "name": "@whiterook6/terminal-engine",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A simple engine to run typescript terminal animations and games",
   "author": "Tim Graboski <whiterook6@gmail.com>",
   "repository": {

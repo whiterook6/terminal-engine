@@ -1,6 +1,6 @@
 import ansi from "ansi";
-import { overwriteArray, overwriteString } from "./helpers";
-import { RGB } from "./types";
+import { overwriteArray, overwriteString } from "./Helpers";
+import { RGB } from "./Types";
 
 export type TOKEN = [
   /** The text to write */

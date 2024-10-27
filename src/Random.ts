@@ -1,4 +1,4 @@
-import { RGB, XY } from "./types";
+import { RGB, XY } from "./Types";
 
 export const randomInt = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min)) + min;

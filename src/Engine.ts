@@ -22,11 +22,11 @@ export class Engine {
       process.stdout.rows,
     );
 
-    process.on("SIGINT", () => {
-      this.stop();
-      this.cursor.goto(0, 0).show().reset().bg.reset().eraseLine();
-      process.exit();
+    process.stdout.addListener("resize", () => {
+      this.framebuffer.resize(process.stdout.columns, process.stdout.rows);
     });
+
+    process.on("SIGINT", this.exit);
   }
 
   public onUpdate = (update: UpdateCallback): Engine => {
@@ -82,5 +82,11 @@ export class Engine {
     }
 
     return this;
+  };
+
+  public exit = (): void => {
+    this.stop();
+    this.cursor.goto(1, 1).show().reset().bg.reset().eraseLine();
+    process.exit();
   };
 }
